@@ -184,6 +184,8 @@ resource "aci_epg_to_domain" "terraform_epg_domain" {
     for_each              = var.epgs
     application_epg_dn    = aci_application_epg.terraform_epg[each.key].id
     tdn   = var.vmm_domain.name
+    res_imedcy = "pre-provision"
+    instr_imedcy = "lazy"
 }
 
 # Associate the EPGs with the contrats
@@ -201,7 +203,7 @@ resource "aci_rest" "device" {
   path = "api/node/mo/${aci_tenant.terraform_tenant.id}/lDevVip-${each.value.name}.json"
   payload = <<EOF
 {
-      "vnsLDevVip":{
+  "vnsLDevVip":{
 		"attributes":{
 				"dn":"${aci_tenant.terraform_tenant.id}/lDevVip-${each.value.name}",
 				"svcType":"${each.value.device_type}",
@@ -316,6 +318,9 @@ resource "aci_rest" "inside_vlan" {
 	                }
   }
   EOF
+  depends_on = [
+  aci_rest.device,
+  ]
 }
 
 ## adding outside VLAN for interfaces of L4-L7 Devices to VLAN Pools
@@ -338,6 +343,9 @@ resource "aci_rest" "outside_vlan" {
 	                }
   }
   EOF
+  depends_on = [
+  aci_rest.device,
+  ]
 }
 
 ## Create the L4-L7 Service Graph Template
@@ -347,6 +355,9 @@ resource "aci_l4_l7_service_graph_template" "ServiceGraph" {
     name                              = format("%s%s","SG-",each.value.name)
     l4_l7_service_graph_template_type = "legacy"
     ui_template_type                  = "UNSPECIFIED"
+    depends_on = [
+    aci_rest.device,
+    ]
 }
 
 # Create L4-L7 Service Graph Function Node
@@ -362,6 +373,9 @@ resource "aci_function_node" "ServiceGraph" {
     sequence_number                 = "0"
     share_encap                     = "no"
     relation_vns_rs_node_to_l_dev   = "${aci_tenant.terraform_tenant.id}/lDevVip-${each.value.name}"
+    depends_on = [
+    aci_rest.device,
+    ]
 }
 
 # Create L4-L7 Service Graph template T1 connection.
