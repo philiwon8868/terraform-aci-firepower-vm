@@ -612,20 +612,20 @@ resource "fmc_access_rules" "access_rule" {
     }
     source_networks {
         source_network {
-            id = data.fmc_network_objects.any_network.id
-            type =  data.fmc_network_objects.any_network.type
+            id = fmc_network_objects.any_network.id
+            type =  fmc_network_objects.any_network.type
         }
     }
     destination_networks {
         destination_network {
-            id = data.fmc_network_objects.any_network.id
-            type =  data.fmc_network_objects.any_network.type
+            id = fmc_network_objects.any_network.id
+            type =  fmc_network_objects.any_network.type
         }
     }
     destination_ports {
         destination_port {
-            id = data.fmc_port_objects.ssh.id
-            type =  data.fmc_port_objects.ssh.type
+            id = fmc_port_objects.ssh.id
+            type =  fmc_port_objects.ssh.type
         }
     }
 #    urls {
