@@ -604,11 +604,11 @@ resource "fmc_access_rules" "access_rule1" {
     name = "SSH-Inside-Out"
     action = "allow"
     enabled = true
-    enable_syslog = true
+    enable_syslog = false
     syslog_severity = "alert"
     send_events_to_fmc = true
     log_files = false
-    log_end = true
+    log_end = false
     source_zones {
         source_zone {
             id = data.fmc_security_zones.inside.id
@@ -647,11 +647,11 @@ resource "fmc_access_rules" "access_rule2" {
     name = "SSH-Outside-In"
     action = "allow"
     enabled = true
-    enable_syslog = true
+    enable_syslog = false
     syslog_severity = "alert"
     send_events_to_fmc = true
     log_files = false
-    log_end = true
+    log_end = false
     source_zones {
         source_zone {
             id = data.fmc_security_zones.outside.id
