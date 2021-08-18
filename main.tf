@@ -567,7 +567,7 @@ data "fmc_security_zones" "destination_zone" {
 }
 
 resource "fmc_network_objects" "any_network" {
-  name        = "Any"
+  name        = "Any_network"
   value       = "0.0.0.0/0"
 }
 
@@ -582,7 +582,7 @@ resource "fmc_ftd_deploy" "ftd" {
 }
 
 resource "fmc_port_objects" "ssh" {
-    name = "SSH"
+    name = "SSH_Access"
     port = "22"
     protocol = "TCP"
 }
@@ -601,32 +601,32 @@ resource "fmc_access_rules" "access_rule" {
     log_end = each.value.log_end
     source_zones {
         source_zone {
-            id = "data.fmc_security_zones.$[each.value.source_zone].id"
-            type =  "data.fmc_security_zones.$[each.value.source_zone].type"
+            id = "data.fmc_security_zones.${each.value.source_zone}.id"
+            type =  "data.fmc_security_zones.${each.value.source_zone}.type"
         }
     }
     destination_zones {
         destination_zone {
-            id = "data.fmc_security_zones.$[each.value.destination_zone].id"
-            type =  "data.fmc_security_zones.$[each.value.destination_zone].type"
+            id = "data.fmc_security_zones.${each.value.destination_zone}.id"
+            type =  "data.fmc_security_zones.${each.value.destination_zone}.type"
         }
     }
     source_networks {
         source_network {
-            id = "data.fmc_network_objects.$[each.value.any_network].id"
-            type =  "data.fmc_network_objects.$[each.value.any_network].type"
+            id = "data.fmc_network_objects.${each.value.any_network}.id"
+            type =  "data.fmc_network_objects.${each.value.any_network}.type"
         }
     }
     destination_networks {
         destination_network {
-            id = "data.fmc_network_objects.$[each.value.any_network].id"
-            type =  "data.fmc_network_objects.$[each.value.any_network].type"
+            id = "data.fmc_network_objects.${each.value.any_network}.id"
+            type =  "data.fmc_network_objects.${each.value.any_network}.type"
         }
     }
     destination_ports {
         destination_port {
-            id = "data.fmc_port_objects.$[each.value.service].id"
-            type =  "data.fmc_port_objects.$[each.value.service].type"
+            id = "data.fmc_port_objects.${each.value.service}.id"
+            type =  "data.fmc_port_objects.${each.value.service}.type"
         }
     }
 #    urls {
