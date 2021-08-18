@@ -228,8 +228,8 @@ variable "FMC_Access_Rules" {
          send_events_to_fmc = true
          log_files = false
          log_end = true
-         source = "inside"
-         destination = "outside"
+         source_zone = "inside"
+         destination_zone = "outside"
       }
       access_rule_2 = {
          section = "mandatory"
@@ -241,8 +241,8 @@ variable "FMC_Access_Rules" {
          send_events_to_fmc = true
          log_files = false
          log_end = true
-         source = "outside"
-         destination = "inside"
+         source_zone = "outside"
+         destination_zone = "inside"
          service = "ssh"
       }
     }
