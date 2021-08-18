@@ -160,7 +160,7 @@ variable "Devices" {
     type = map
     default = {
        FTDv = {
-           name = "FTDv"
+           name = "FTD232"
            device_type = "FW"
            managed = "false"
            interface_name = "Device-Interfaces"
@@ -210,6 +210,40 @@ variable "PBRs" {
         threshold_enable        = "yes"
         ip = "2.2.2.254"
         mac = "00:50:56:9b:06:1e"
+      }
+    }
+}
+
+variable "FMC_Access_Rules" {
+    description = "List of Access Rules to be added in FMC"
+    type = map
+    default = {
+      access_rule_1 = {
+         section = "mandatory"
+         name = "SSH-Inside-Out-1"
+         action = "allow"
+         enable = true
+         enable_syslog = true
+         syslog_severity = "alert"
+         send_events_to_fmc = true
+         log_files = false
+         log_end = true
+         source = "inside"
+         destination = "outside"
+      }
+      access_rule_2 = {
+         section = "mandatory"
+         name = "SSH-Outside-In-1"
+         action = "allow"
+         enable = true
+         enable_syslog = true
+         syslog_severity = "alert"
+         send_events_to_fmc = true
+         log_files = false
+         log_end = true
+         source = "outside"
+         destination = "inside"
+         service = "ssh"
       }
     }
 }
