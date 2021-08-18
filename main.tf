@@ -571,10 +571,6 @@ resource "fmc_network_objects" "any_network" {
   value       = "0.0.0.0/0"
 }
 
-data "fmc_url_objects" "Any" {
-    name = "Any"
-}
-
 data "fmc_devices" "device" {
     name = "FTD232"
 }
@@ -633,12 +629,12 @@ resource "fmc_access_rules" "access_rule" {
             type =  "data.fmc_port_objects.$[each.value.service].type"
         }
     }
-    urls {
-        url {
-            id = data.fmc_url_objects.Any.id
-            type = "Url"
-        }
-    }
+#    urls {
+#        url {
+#            id = data.fmc_url_objects.Any.id
+#            type = "Url"
+#        }
+#    }
     #ips_policy = data.fmc_ips_policies.ips_policy.id
     #syslog_config = data.fmc_syslog_alerts.syslog_alert.id
     #new_comments = [ "New", "comment" ]
