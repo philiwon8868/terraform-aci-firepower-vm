@@ -37,11 +37,11 @@ variable "bds" {
       },
       inside = {
         bd_name = "bd-inside"
-        subnet = "3.3.3.1/24"
+        subnet = "1.1.1.1/24"
       },
       outside = {
         bd_name = "bd-outside"
-        subnet = "4.4.4.1/24"
+        subnet = "2.2.2.1/24"
       }
     }
 }
@@ -193,7 +193,7 @@ variable "PBRs" {
         max_threshold_percent   = "100"
         description             = "Inside PBR Policy"
         threshold_enable        = "yes"
-        ip = "3.3.3.254"
+        ip = "1.1.1.254"
         mac = "00:50:56:9b:21:d5"
       }
       Outside_PBR = {
@@ -204,7 +204,7 @@ variable "PBRs" {
         max_threshold_percent   = "100"
         description             = "Outside PBR Policy"
         threshold_enable        = "yes"
-        ip = "4.4.4.254"
+        ip = "2.2.2.254"
         mac = "00:50:56:9b:06:1e"
       }
     }
