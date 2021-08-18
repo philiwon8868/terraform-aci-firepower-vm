@@ -596,7 +596,7 @@ resource "fmc_port_objects" "ssh" {
 
 resource "fmc_access_rules" "access_rule" {
     for_each = var.FMC_Access_Rules
-    acp = fmc_access_policies.access_policy.id
+    acp = fmc_access_policies.acp.id
     section = each.value.section
     name = each.value.name
     action = each.value.action
