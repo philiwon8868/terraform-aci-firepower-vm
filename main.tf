@@ -597,10 +597,11 @@ resource "fmc_policy_devices_assignments" "policy_assignment" {
         type = data.fmc_devices.device.type
     }
 }
-resource "fmc_access_rules" "access_rule" {
+
+resource "fmc_access_rules" "access_rule1" {
     acp = data.fmc_access_policies.acp.id
     section = "mandatory"
-    name = "SSH-Inside-Out-1"
+    name = "SSH-Inside-Out"
     action = "allow"
     enabled = true
     enable_syslog = true
@@ -638,13 +639,47 @@ resource "fmc_access_rules" "access_rule" {
             type =  fmc_port_objects.ssh.type
         }
     }
-#    urls {
-#        url {
-#            id = data.fmc_url_objects.Any.id
-#            type = "Url"
-#        }
-#    }
-    #ips_policy = data.fmc_ips_policies.ips_policy.id
-    #syslog_config = data.fmc_syslog_alerts.syslog_alert.id
-    #new_comments = [ "New", "comment" ]
+}
+
+resource "fmc_access_rules" "access_rule2" {
+    acp = data.fmc_access_policies.acp.id
+    section = "mandatory"
+    name = "SSH-Outside-In"
+    action = "allow"
+    enabled = true
+    enable_syslog = true
+    syslog_severity = "alert"
+    send_events_to_fmc = true
+    log_files = false
+    log_end = true
+    source_zones {
+        source_zone {
+            id = data.fmc_security_zones.outside.id
+            type =  data.fmc_security_zones.outside.type
+        }
+    }
+    destination_zones {
+        destination_zone {
+            id = data.fmc_security_zones.inside.id
+            type =  data.fmc_security_zones.inside.type
+        }
+    }
+    source_networks {
+        source_network {
+            id = fmc_network_objects.any_network.id
+            type =  fmc_network_objects.any_network.type
+        }
+    }
+    destination_networks {
+        destination_network {
+            id = fmc_network_objects.any_network.id
+            type =  fmc_network_objects.any_network.type
+        }
+    }
+    destination_ports {
+        destination_port {
+            id = fmc_port_objects.ssh.id
+            type =  fmc_port_objects.ssh.type
+        }
+    }
 }
