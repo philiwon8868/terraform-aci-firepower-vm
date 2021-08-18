@@ -601,7 +601,7 @@ resource "fmc_access_rules" "access_rule" {
     log_end = each.value.log_end
     source_zones {
         source_zone {
-            id = ${"data.fmc_security_zones.inside.id"}
+            id = data.fmc_security_zones.${each.value.source_zone}.id
             type =  "data.fmc_security_zones.${each.value.source_zone}.type"
         }
     }
