@@ -566,11 +566,7 @@ data "fmc_security_zones" "destination_zone" {
     name = "Outside"
 }
 
-data "fmc_network_objects" "source_network" {
-    name = "Any"
-}
-
-data "fmc_network_objects" "destination_network" {
+data "fmc_network_objects" "any_network" {
     name = "Any"
 }
 
@@ -620,14 +616,14 @@ resource "fmc_access_rules" "access_rule" {
     }
     source_networks {
         source_network {
-            id = "data.fmc_network_objects.$[each.value.source_network].id"
-            type =  "data.fmc_network_objects.$[each.value.source_network].type"
+            id = "data.fmc_network_objects.$[each.value.any_network].id"
+            type =  "data.fmc_network_objects.$[each.value.any_network].type"
         }
     }
     destination_networks {
         destination_network {
-            id = "data.fmc_network_objects.$[each.value.destination_network].id"
-            type =  "data.fmc_network_objects.$[each.value.destination_network].type"
+            id = "data.fmc_network_objects.$[each.value.any_network].id"
+            type =  "data.fmc_network_objects.$[each.value.any_network].type"
         }
     }
     destination_ports {
