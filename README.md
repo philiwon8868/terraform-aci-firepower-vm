@@ -1,22 +1,26 @@
-# terraform-aci
+# terraform-aci-firepower-vm
 
 Sample [Terraform Cloud](https://www.terraform.io/cloud) Integration with [Cisco ACI Network](https://www.cisco.com/go/aci).
 
-This project is inspired by another project: https://github.com/christung16/terraform-mso-aci. It is to provide another working sample for those who would like to leverage on ACI's Terraform integration to experience the power of "Infrastructure As Code" - how to provision an ACI application network with a coding approach using Terraform HCL. This project utilize Terraform ACI integration only to provision the infrastructure on the overlay network policies, the L4-L7 Service Appliance and its associated PBR policies. In future revision, it may be extended to cover the underlay network and virtual compute infrastructure.
+This project is derived from a previous project: https://github.com/philiwon8868/terraform-aci. It is a working sample for those who would like to leverage on ACI's Terraform integration to experience the power of "Infrastructure As Code".
 
+The sample ACI application environment is a typical 3-Tier "web-app-db", leveraging ACI contracts and L4-L7 service graph with a Cisco Firepower FTDv to govern their communication policies.
 ![image](https://user-images.githubusercontent.com/8743281/123520075-80b0fb00-d6e1-11eb-8ec5-909ccd8cfbcc.png)
 
-The code will provision the followings onto an on-premise ACI private cloud environment:
+Terraform HCL is a declarative language which will provision the followings onto an ACI cloud environment:
 * 3 End-Point Groups (EPGs): "Web", "App" and "DB"
 * 2 Contracts:
   * Between "App" and "DB": TCP Port 80 (HTTP) and ICMP
   * Between "Web" and "App": permit ALL with a Service Graph
 * Service Graph:
-  * 2-Arm Routed Mode Unmanaged Firewall with Policy Based Redirect (PBR). The Firewall in this example is a Cisco Virtual ASA Firewall, however, it can be any service appliance.
+  * 2-Arm Routed Mode Unmanaged Firewall with Policy Based Redirect (PBR).
+* VM provisioning
+  * Associate VMM Domain to all 3 EPGs
+  * Provision 3 Sample VMs - one for each of the 3 EPGs
+  * Attach these 3 VMs to their corresponding EPGs
 
 ![image](https://user-images.githubusercontent.com/8743281/123568965-10e16400-d7f8-11eb-9678-8d1c2fd02100.png)
 
-* Associate VMM Domain to all 3 EPGs
 
 ## Pre-requisites
 
