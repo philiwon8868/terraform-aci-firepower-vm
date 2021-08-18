@@ -558,19 +558,19 @@ data "fmc_access_policies" "acp" {
     name = "Access-Control-Policy"
 }
 
-data "fmc_security_zones" "inside" {
+data "fmc_security_zones" "source_zone" {
     name = "Inside"
 }
 
-data "fmc_security_zones" "outside" {
+data "fmc_security_zones" "destination_zone" {
     name = "Outside"
 }
 
-data "fmc_network_objects" "inside" {
+data "fmc_network_objects" "source_network" {
     name = "Any"
 }
 
-data "fmc_network_objects" "outside" {
+data "fmc_network_objects" "destination_network" {
     name = "Any"
 }
 
@@ -608,26 +608,26 @@ resource "fmc_access_rules" "access_rule" {
     log_end = each.value.log_end
     source_zones {
         source_zone {
-            id = "data.fmc_security_zones.$[each.value.source].id"
-            type =  "data.fmc_security_zones.$[each.value.source].type"
+            id = "data.fmc_security_zones.$[each.value.source_zone].id"
+            type =  "data.fmc_security_zones.$[each.value.source_zone].type"
         }
     }
     destination_zones {
         destination_zone {
-            id = "data.fmc_security_zones.$[each.value.destination].id"
-            type =  "data.fmc_security_zones.$[each.value.destination].type"
+            id = "data.fmc_security_zones.$[each.value.destination_zone].id"
+            type =  "data.fmc_security_zones.$[each.value.destination_zone].type"
         }
     }
     source_networks {
         source_network {
-            id = "data.fmc_network_objects.$[each.value.source].id"
-            type =  "data.fmc_network_objects.$[each.value.source].type"
+            id = "data.fmc_network_objects.$[each.value.source_network].id"
+            type =  "data.fmc_network_objects.$[each.value.source_network].type"
         }
     }
     destination_networks {
         destination_network {
-            id = "data.fmc_network_objects.$[each.value.destination].id"
-            type =  "data.fmc_network_objects.$[each.value.destination].type"
+            id = "data.fmc_network_objects.$[each.value.destination_network].id"
+            type =  "data.fmc_network_objects.$[each.value.destination_network].type"
         }
     }
     destination_ports {
