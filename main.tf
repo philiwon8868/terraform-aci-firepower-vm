@@ -560,10 +560,12 @@ data "fmc_access_policies" "acp" {
 
 data "fmc_security_zones" "inside" {
     name = "Inside"
+    type = "Physical"
 }
 
 data "fmc_security_zones" "outside" {
     name = "Outside"
+    type = "Physical"
 }
 
 resource "fmc_network_objects" "any_network" {
