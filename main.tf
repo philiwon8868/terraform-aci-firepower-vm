@@ -2,6 +2,15 @@ terraform {
   required_providers {
     aci = {
       source = "CiscoDevNet/aci"
+      version = "0.7.1"
+    }
+    fmc = {
+      source = "CiscoDevNet/fmc"
+      version = "0.1.1"
+    }
+    vsphere = {
+      source = "hashicorp/vsphere"
+      version = "2.0.2"
     }
   }
 }
