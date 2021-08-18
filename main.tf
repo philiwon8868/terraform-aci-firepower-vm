@@ -588,45 +588,44 @@ resource "fmc_port_objects" "ssh" {
 }
 
 resource "fmc_access_rules" "access_rule" {
-    for_each = var.FMC_Access_Rules
     acp = data.fmc_access_policies.acp.id
-    section = each.value.section
-    name = each.value.name
-    action = each.value.action
-    enabled = each.value.enabled
-    enable_syslog = each.value.enable_syslog
-    syslog_severity = each.value.syslog_severity
-    send_events_to_fmc = each.value.send_events_to_fmc
-    log_files = each.value.log_files
-    log_end = each.value.log_end
+    section = "mandatory"
+    name = "SSH-Inside-Out-1"
+    action = "allow"
+    enabled = true
+    enable_syslog = true
+    syslog_severity = "alert"
+    send_events_to_fmc = true
+    log_files = false
+    log_end = true
     source_zones {
         source_zone {
-            id = data.fmc_security_zones.${each.value.source_zone}.id
-            type =  data.fmc_security_zones.[each.value.source_zone].type
+            id = data.fmc_security_zones.inside.id
+            type =  data.fmc_security_zones.inside.type
         }
     }
     destination_zones {
         destination_zone {
-            id = "data.fmc_security_zones.${each.value.destination_zone}.id"
-            type =  "data.fmc_security_zones.${each.value.destination_zone}.type"
+            id = data.fmc_security_zones.outside.id
+            type =  data.fmc_security_zones.outside.type
         }
     }
     source_networks {
         source_network {
-            id = "data.fmc_network_objects.${each.value.any_network}.id"
-            type =  "data.fmc_network_objects.${each.value.any_network}.type"
+            id = data.fmc_network_objects.any_network.id
+            type =  data.fmc_network_objects.any_network.type
         }
     }
     destination_networks {
         destination_network {
-            id = "data.fmc_network_objects.${each.value.any_network}.id"
-            type =  "data.fmc_network_objects.${each.value.any_network}.type"
+            id = data.fmc_network_objects.any_network.id
+            type =  data.fmc_network_objects.any_network.type
         }
     }
     destination_ports {
         destination_port {
-            id = "data.fmc_port_objects.${each.value.service}.id"
-            type =  "data.fmc_port_objects.${each.value.service}.type"
+            id = data.fmc_port_objects.ssh.id
+            type =  data.fmc_port_objects.ssh.type
         }
     }
 #    urls {

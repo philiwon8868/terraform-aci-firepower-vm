@@ -214,43 +214,6 @@ variable "PBRs" {
     }
 }
 
-variable "FMC_Access_Rules" {
-    description = "List of Access Rules to be added in FMC"
-    type = map
-    default = {
-      access_rule_1 = {
-         section = "mandatory"
-         name = "SSH-Inside-Out-1"
-         action = "allow"
-         enabled = true
-         enable_syslog = true
-         syslog_severity = "alert"
-         send_events_to_fmc = true
-         log_files = false
-         log_end = true
-         source_zone = "inside"
-         destination_zone = "outside"
-         any_network = "any_network"
-         service = "ssh"
-      }
-      access_rule_2 = {
-         section = "mandatory"
-         name = "SSH-Outside-In-1"
-         action = "allow"
-         enabled = true
-         enable_syslog = true
-         syslog_severity = "alert"
-         send_events_to_fmc = true
-         log_files = false
-         log_end = true
-         source_zone = "outside"
-         destination_zone = "inside"
-         service = "ssh"
-         any_network = "any_network"
-      }
-    }
-}
-
 variable "vm" {
     type = map
     default = {
