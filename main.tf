@@ -552,3 +552,8 @@ resource "aci_destination_of_redirected_traffic" "pbr" {
     aci_rest.rh,
   ]
 }
+
+# FMC Rule Changes
+data "fmc_access_policies" "acp" {
+    name = "Access-Control-Policy"
+}
