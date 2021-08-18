@@ -558,11 +558,11 @@ data "fmc_access_policies" "acp" {
     name = "Access-Control-Policy"
 }
 
-data "fmc_security_zones" "source_zone" {
+data "fmc_security_zones" "inside" {
     name = "Inside"
 }
 
-data "fmc_security_zones" "destination_zone" {
+data "fmc_security_zones" "outside" {
     name = "Outside"
 }
 

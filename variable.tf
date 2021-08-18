@@ -230,6 +230,8 @@ variable "FMC_Access_Rules" {
          log_end = true
          source_zone = "inside"
          destination_zone = "outside"
+         any_network = "any_network"
+         service = "ssh"
       }
       access_rule_2 = {
          section = "mandatory"
@@ -244,6 +246,7 @@ variable "FMC_Access_Rules" {
          source_zone = "outside"
          destination_zone = "inside"
          service = "ssh"
+         any_network = "any_network"
       }
     }
 }
