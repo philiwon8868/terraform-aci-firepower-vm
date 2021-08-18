@@ -577,8 +577,8 @@ data "fmc_devices" "device" {
 
 resource "fmc_ftd_deploy" "ftd" {
     device = data.fmc_devices.device.id
-    ignore_warning = false
-    force_deploy = false
+    ignore_warning = true
+    force_deploy = true
 }
 
 resource "fmc_port_objects" "ssh" {
