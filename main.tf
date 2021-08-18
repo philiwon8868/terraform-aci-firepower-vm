@@ -566,8 +566,9 @@ data "fmc_security_zones" "destination_zone" {
     name = "Outside"
 }
 
-data "fmc_network_objects" "any_network" {
-    name = "Any"
+resource "fmc_network_objects" "any_network" {
+  name        = "Any"
+  value       = "0.0.0.0/0"
 }
 
 data "fmc_url_objects" "Any" {
