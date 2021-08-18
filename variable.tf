@@ -222,7 +222,7 @@ variable "FMC_Access_Rules" {
          section = "mandatory"
          name = "SSH-Inside-Out-1"
          action = "allow"
-         enable = true
+         enabled = true
          enable_syslog = true
          syslog_severity = "alert"
          send_events_to_fmc = true
@@ -235,7 +235,7 @@ variable "FMC_Access_Rules" {
          section = "mandatory"
          name = "SSH-Outside-In-1"
          action = "allow"
-         enable = true
+         enabled = true
          enable_syslog = true
          syslog_severity = "alert"
          send_events_to_fmc = true
