@@ -10,6 +10,10 @@ variable "vSphere_Site" {
     type = map(any)
 }
 
+variable "fmc_user" {
+    type = map(any)
+}
+
 variable "tenant" {
   type = map(any)
 }
