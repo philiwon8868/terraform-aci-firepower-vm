@@ -638,7 +638,7 @@ resource "fmc_access_rules" "access_rule" {
     }
     urls {
         url {
-            id = fmc_url_objects.Any.id
+            id = data.fmc_url_objects.Any.id
             type = "Url"
         }
     }
