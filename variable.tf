@@ -159,7 +159,7 @@ variable "Devices" {
     description = "L4-L7 Device FirePower Threat Defense Definition"
     type = map
     default = {
-       FTDv = {
+       FTD232 = {
            name = "FTD232"
            device_type = "FW"
            managed = "false"
