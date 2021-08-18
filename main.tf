@@ -6,6 +6,14 @@ terraform {
   }
 }
 
+# Provider for FMC - Firepower Management Center
+provider "fmc" {
+    fmc_username = var.fmc_user.username
+    fmc_password = var.fmc_user.password
+    fmc_host = var.fmc_user.host
+    fmc_insecure_skip_verify = true
+}
+
 # Configure the provider with your Cisco APIC credentials.
 provider "aci" {
   username = var.user.username
