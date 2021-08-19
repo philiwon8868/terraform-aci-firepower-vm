@@ -587,16 +587,16 @@ resource "fmc_port_objects" "ssh" {
     protocol = "TCP"
 }
 
-resource "fmc_policy_devices_assignments" "policy_assignment" {
-    policy {
-        id = data.fmc_access_policies.acp.id
-        type = data.fmc_access_policies.acp.type
-    }
-    target_devices {
-        id = data.fmc_devices.device.id
-        type = data.fmc_devices.device.type
-    }
-}
+#resource "fmc_policy_devices_assignments" "policy_assignment" {
+#    policy {
+#        id = data.fmc_access_policies.acp.id
+#        type = data.fmc_access_policies.acp.type
+#    }
+#    target_devices {
+#        id = data.fmc_devices.device.id
+#        type = data.fmc_devices.device.type
+#    }
+#}
 
 resource "fmc_access_rules" "access_rule1" {
     acp = data.fmc_access_policies.acp.id
