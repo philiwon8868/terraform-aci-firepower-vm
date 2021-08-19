@@ -653,7 +653,7 @@ resource "fmc_access_rules" "access_rule2" {
     acp = data.fmc_access_policies.acp.id
     section = "mandatory"
     name = "SSH-Inside-Out"
-    action = "allow"
+    action = "monitor"
     enabled = true
     enable_syslog = true
     syslog_severity = "alert"
