@@ -566,9 +566,9 @@ data "fmc_security_zones" "outside" {
     name = "Outside"
 }
 
-#data "fmc_file_policies" "file_policy" {
-#    name = "File_Policies"
-#}
+data "fmc_file_policies" "file_policy" {
+    name = "File_Policies"
+}
 
 resource "fmc_network_objects" "any_network" {
   name        = "Any_network"
@@ -602,54 +602,7 @@ resource "fmc_port_objects" "ssh" {
 #    }
 #}
 
-resource "fmc_access_rules" "access_rule1" {
-    acp = data.fmc_access_policies.acp.id
-    section = "mandatory"
-    name = "SSH-Inside-Out"
-    action = "block"
-    #file_policy = data.fmc_file_policies.file_policy.id
-    enabled = true
-    enable_syslog = false
-    syslog_severity = "alert"
-    send_events_to_fmc = false
-    log_files = false
-    log_end = false
-    source_zones {
-        source_zone {
-            id = data.fmc_security_zones.inside.id
-            type =  data.fmc_security_zones.inside.type
-        }
-    }
-    destination_zones {
-        destination_zone {
-            id = data.fmc_security_zones.outside.id
-            type =  data.fmc_security_zones.outside.type
-        }
-    }
-    source_networks {
-        source_network {
-            id = fmc_network_objects.any_network.id
-            type =  fmc_network_objects.any_network.type
-        }
-    }
-    destination_networks {
-        destination_network {
-            id = fmc_network_objects.any_network.id
-            type =  fmc_network_objects.any_network.type
-        }
-    }
-    destination_ports {
-        destination_port {
-            id = fmc_port_objects.ssh.id
-            type =  fmc_port_objects.ssh.type
-        }
-    }
-    depends_on = [
-      fmc_port_objects.ssh,
-    ]
-}
-
-resource "fmc_access_rules" "access_rule2" {
+resource "fmc_access_rules" "access_rule" {
     acp = data.fmc_access_policies.acp.id
     section = "mandatory"
     name = "SSH-Outside-In"
@@ -657,10 +610,10 @@ resource "fmc_access_rules" "access_rule2" {
     enabled = true
     enable_syslog = false
     syslog_severity = "alert"
-    send_events_to_fmc = false
+    send_events_to_fmc = true
     #file_policy = data.fmc_file_policies.file_policy.id
-    log_files = false
-    log_end = false
+    log_files = true
+    log_end = true
     source_zones {
         source_zone {
             id = data.fmc_security_zones.outside.id
