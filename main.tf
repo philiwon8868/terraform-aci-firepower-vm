@@ -566,6 +566,10 @@ data "fmc_security_zones" "outside" {
     name = "Outside"
 }
 
+data "fmc_file_policies" "file_policy" {
+    name = "File_Policies"
+}
+
 resource "fmc_network_objects" "any_network" {
   name        = "Any_network"
   value       = "0.0.0.0/0"
@@ -603,6 +607,7 @@ resource "fmc_access_rules" "access_rule1" {
     section = "mandatory"
     name = "SSH-Inside-Out"
     action = "allow"
+    file_policy = data.fmc_file_policies.file_policy.id
     enabled = true
     enable_syslog = true
     syslog_severity = "alert"
