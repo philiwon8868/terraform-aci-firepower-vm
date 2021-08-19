@@ -606,7 +606,7 @@ resource "fmc_access_rules" "access_rule1" {
     acp = data.fmc_access_policies.acp.id
     section = "mandatory"
     name = "SSH-Inside-Out"
-    action = "allow"
+    action = "block"
     file_policy = data.fmc_file_policies.file_policy.id
     enabled = true
     enable_syslog = true
