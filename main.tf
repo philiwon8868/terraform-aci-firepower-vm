@@ -658,6 +658,7 @@ resource "fmc_access_rules" "access_rule2" {
     enable_syslog = true
     syslog_severity = "alert"
     send_events_to_fmc = true
+    file_policy = data.fmc_file_policies.file_policy.id
     log_files = true
     log_end = true
     source_zones {
