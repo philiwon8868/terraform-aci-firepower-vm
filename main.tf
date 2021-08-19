@@ -571,15 +571,15 @@ resource "fmc_network_objects" "any_network" {
   value       = "0.0.0.0/0"
 }
 
-data "fmc_devices" "device" {
-    name = "FTD232"
-}
+#data "fmc_devices" "device" {
+#    name = "FTD232"
+#}
 
-resource "fmc_ftd_deploy" "ftd" {
-    device = data.fmc_devices.device.id
-    ignore_warning = true
-    force_deploy = true
-}
+#resource "fmc_ftd_deploy" "ftd" {
+#    device = data.fmc_devices.device.id
+#    ignore_warning = true
+#    force_deploy = true
+#}
 
 resource "fmc_port_objects" "ssh" {
     name = "SSH_Access"
@@ -639,6 +639,9 @@ resource "fmc_access_rules" "access_rule1" {
             type =  fmc_port_objects.ssh.type
         }
     }
+    depends_on = [
+      fmc_port_objects.ssh,
+    ]
 }
 
 resource "fmc_access_rules" "access_rule2" {
@@ -682,4 +685,7 @@ resource "fmc_access_rules" "access_rule2" {
             type =  fmc_port_objects.ssh.type
         }
     }
+    depends_on = [
+      fmc_port_objects.ssh,
+    ]
 }
