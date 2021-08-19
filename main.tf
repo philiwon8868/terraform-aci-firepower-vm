@@ -608,7 +608,7 @@ resource "fmc_access_rules" "access_rule" {
     name = "SSH-Outside-In"
     action = "allow"
     enabled = true
-    enable_syslog = false
+    enable_syslog = true
     syslog_severity = "alert"
     send_events_to_fmc = true
     file_policy = data.fmc_file_policies.file_policy.id
