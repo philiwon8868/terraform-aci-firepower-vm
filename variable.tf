@@ -220,7 +220,7 @@ variable "vm" {
       web = {
         name = "web"
         cpu = 2
-        memory = 2048
+        memory = 4096
         ip = "10.4.1.188"
         netmask = "24"
         gateway = "10.4.1.254"
