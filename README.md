@@ -4,23 +4,26 @@ Sample [Terraform Cloud](https://www.terraform.io/cloud) Integration with [Cisco
 
 This project is derived from a previous project: https://github.com/philiwon8868/terraform-aci. It is a working sample for those who would like to leverage on ACI's Terraform integration to experience the power of "Infrastructure As Code".
 
-The sample ACI application environment is a typical 3-Tier "web-app-db", leveraging ACI contracts and L4-L7 service graph with a Cisco Firepower Threat Defense (FTD) to govern their communication policies.
-![image](https://user-images.githubusercontent.com/8743281/123520075-80b0fb00-d6e1-11eb-8ec5-909ccd8cfbcc.png)
+The sample ACI application environment is a typical 3-Tier "web-app-db", leveraging ACI contracts and L4-L7 service graph with a Cisco Firepower Threat Defense (FTD) Virtual Device to govern their communication policies. The FTD devie will be managed by Cisco Firepower Management Center (FMC). FMC has Terraform provider support which allows us to push policies to FMC console, at which security operator can deploy to the target FTD devices.
 
-Terraform HCL is a declarative language which will provision the followings onto an ACI cloud environment:
+![image](https://user-images.githubusercontent.com/8743281/131292771-7ddd9e23-bbf6-4f70-aad4-ecfb7d1e7063.png)
+
+Terraform HCL is a declarative language which will provision the followings onto an ACI private cloud environment:
 * 3 End-Point Groups (EPGs): "Web", "App" and "DB"
 * 2 Contracts:
   * Between "App" and "DB": TCP Port 80 (HTTP) and ICMP
   * Between "Web" and "App": permit ALL with a Service Graph
 * Service Graph:
   * 2-Arm Routed Mode Unmanaged Firewall with Policy Based Redirect (PBR).
+![image](https://user-images.githubusercontent.com/8743281/131295043-5ce7fd77-a04d-46e4-96b2-c59d84c85a7b.png)
+* FMC access rules
+  * allow SSH (tcp port 22) from "inside" to "outside" 
+  * allow SSH (tcp port 22) from "outside" to "inside"
+  ![image](https://user-images.githubusercontent.com/8743281/131295220-69fe776a-1eee-42c0-b1cc-d669637a479c.png)
 * VM provisioning
   * Associate VMM Domain to all 3 EPGs
   * Provision 3 Sample VMs - one for each of the 3 EPGs
   * Attach these 3 VMs to their corresponding EPGs
-
-![image](https://user-images.githubusercontent.com/8743281/123568965-10e16400-d7f8-11eb-9678-8d1c2fd02100.png)
-
 
 ## Pre-requisites
 
@@ -39,7 +42,7 @@ fmc | >= 0.1.1
 vsphere | >= 2.0.2
 
 ## Compatibility
-This sample is developed and tested with Cisco ACI 5.2(1g) and [Terraform Cloud](https://www.terraform.io/cloud) 1.0.1. However, it is expected to work with Cisco ACI >=4.2 and terraform >=0.13.
+This sample is developed and tested with Cisco ACI 5.2(1g) and [Terraform Cloud](https://www.terraform.io/cloud) 1.0.5. However, it is expected to work with Cisco ACI >=4.2 and terraform >=0.13.
 
 ## Use Case Description
 
@@ -52,20 +55,20 @@ This sample is developed and tested with Cisco ACI 5.2(1g) and [Terraform Cloud]
 
 ## Configuration
 
-Basically all variables are defined in the file "variable.tf" except for APIC login credential, APIC IP address, the VMM domain name and the target ACI Tenant, which are defined in "Variables" section of the Terraform Cloud environment.
+Basically all variables are defined in the file "variable.tf" except for APIC login credential, APIC IP address, the FMC host and user name, the VMM domain name and the target ACI Tenant, which are defined in "Variables" section of the Terraform Cloud environment.
 ![image](https://user-images.githubusercontent.com/8743281/123569650-505c8000-d7f9-11eb-95e0-52588e2f06ae.png)
 
-Modify **variable.tf** to include the parameters for APIC login credentials, the target ACI tenant name and the VMM domain name.
+Modify **variable.tf** to include the parameters for APIC login credentials, the target ACI tenant name, the FMC host and the VMM domain name.
 
 All variables in the sample, including the **"Devices"** (for the Service Appliance) and the **"PBRs"**, are self-explanatory and may be modified to cater for one's environment. However, there is a cross-reference of 2 parameters for them, which are highlighted below:
 
 variable **"Devices"** {
 ```
-description = "L4-L7 Device Definition"
+    description = "L4-L7 Device FirePower Threat Defense Definition"
     type = map
     default = {
-       ASA1000v = {
-           name = "ASA1000v"
+       FTD232 = {
+           name = "FTD232"
            device_type = "FW"
            managed = "false"
            interface_name = "Device-Interfaces"
@@ -77,15 +80,15 @@ description = "L4-L7 Device Definition"
            outside_pbr = "Outside_PBR"
            inside_pod = "1"
            outside_pod = "1"
-           inside_node = "301"
-           outside_node = "301"
-           inside_eth = "8"
-           outside_eth = "8"
+           inside_node = "105"
+           outside_node = "105"
+           inside_eth = "48"
+           outside_eth = "48"
            inside_vlan = "1088"
            outside_vlan = "1089"
            phy_domain = "phys"
-           phy_vlan_pool = "Phys-Pool"
-           contract = "SG_ASA1000v"
+           phy_vlan_pool = "VLAN-Phys"
+           contract = "SG_FTDv"
        }
     }
 ```
@@ -96,7 +99,6 @@ In this case, the inside_pbr "**Inside_PBR**" and outside_pbr "**Outside_PBR**" 
 variable **"PBRs"** {
 ```
     description = "List of PBRs to be defined"
-
     type = map
     default = {
       Inside_PBR = {
@@ -107,8 +109,8 @@ variable **"PBRs"** {
         max_threshold_percent   = "100"
         description             = "Inside PBR Policy"
         threshold_enable        = "yes"
-        ip = "3.3.3.254"
-        mac = "00:50:56:98:4c:52"
+        ip = "1.1.1.254"
+        mac = "00:50:56:9b:21:d5"
       }
       Outside_PBR = {
         name = "Outside_PBR"
@@ -118,12 +120,12 @@ variable **"PBRs"** {
         max_threshold_percent   = "100"
         description             = "Outside PBR Policy"
         threshold_enable        = "yes"
-        ip = "4.4.4.254"
-        mac = "00:50:56:98:dc:9e"
+        ip = "2.2.2.254"
+        mac = "00:50:56:9b:06:1e"
       }
     }
-}
 ```
+}
 ## Usage
 
 *To provision:*
@@ -131,10 +133,6 @@ variable **"PBRs"** {
 
 *To destroy:*
  * Destroy the deployment with *terraform destroy* command.
-
-## Next Project
-
-After the deployment, one may find the virtual portgroups provisioned in the VMM domain for the 3 EPGs. One may need to manually associate these virtual portgroups to the testing VMs. In the upcoming project named "**terraform-aci-vm**", the testing VMs can be specified in the HCL, automatically provisioned and associated with their corresponding EPG's virtual portgroups.
 
 ## Credits and references
 
