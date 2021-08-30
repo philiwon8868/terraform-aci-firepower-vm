@@ -4,7 +4,7 @@ Sample [Terraform Cloud](https://www.terraform.io/cloud) Integration with [Cisco
 
 This project is derived from a previous project: https://github.com/philiwon8868/terraform-aci. It is a working sample for those who would like to leverage on ACI's Terraform integration to experience the power of "Infrastructure As Code".
 
-The sample ACI application environment is a typical 3-Tier "web-app-db", leveraging ACI contracts and L4-L7 service graph with a Cisco Firepower FTDv to govern their communication policies.
+The sample ACI application environment is a typical 3-Tier "web-app-db", leveraging ACI contracts and L4-L7 service graph with a Cisco Firepower Threat Defense (FTD) to govern their communication policies.
 ![image](https://user-images.githubusercontent.com/8743281/123520075-80b0fb00-d6e1-11eb-8ec5-909ccd8cfbcc.png)
 
 Terraform HCL is a declarative language which will provision the followings onto an ACI cloud environment:
@@ -34,7 +34,9 @@ Name | Version
 ## Providers
 Name | Version
 ---- | -------
-aci | >= 0.4.1
+aci | >= 0.7.1
+fmc | >= 0.1.1
+vsphere | >= 2.0.2
 
 ## Compatibility
 This sample is developed and tested with Cisco ACI 5.2(1g) and [Terraform Cloud](https://www.terraform.io/cloud) 1.0.1. However, it is expected to work with Cisco ACI >=4.2 and terraform >=0.13.
