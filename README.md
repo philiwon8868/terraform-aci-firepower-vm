@@ -8,7 +8,7 @@ The sample ACI application environment is a typical 3-Tier "web-app-db", leverag
 
 ![image](https://user-images.githubusercontent.com/8743281/131292771-7ddd9e23-bbf6-4f70-aad4-ecfb7d1e7063.png)
 
-Terraform HCL is a declarative language which will provision the followings onto an ACI private cloud environment:
+Terraform HCL is a declarative language which will provision the followings onto an ACI private cloud environment: 
 * 3 End-Point Groups (EPGs): "Web", "App" and "DB"
 * 2 Contracts:
   * Between "App" and "DB": TCP Port 80 (HTTP) and ICMP
