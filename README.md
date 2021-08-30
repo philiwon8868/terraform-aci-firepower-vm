@@ -17,7 +17,7 @@ Terraform HCL is a declarative language which will provision the followings onto
   * 2-Arm Routed Mode Unmanaged Firewall with Policy Based Redirect (PBR).
 ![image](https://user-images.githubusercontent.com/8743281/131295043-5ce7fd77-a04d-46e4-96b2-c59d84c85a7b.png)
 * FMC access rules
-  * allow SSH (tcp port 22) from "inside" to "outside" 
+  * allow SSH (tcp port 22) from "inside" to "outside"
   * allow SSH (tcp port 22) from "outside" to "inside"
   ![image](https://user-images.githubusercontent.com/8743281/131295220-69fe776a-1eee-42c0-b1cc-d669637a479c.png)
 * VM provisioning
@@ -126,6 +126,58 @@ variable **"PBRs"** {
     }
 ```
 }
+
+**Sample FMC Acess rules**
+resource "**fmc_access_rules**" "access_rule1" {
+
+```
+    acp = data.fmc_access_policies.acp.id
+    section = "mandatory"
+    name = "SSH-Outside-In"
+    action = "allow"
+    enabled = true
+    enable_syslog = true
+    syslog_severity = "alert"
+    send_events_to_fmc = true
+    file_policy = data.fmc_file_policies.file_policy.id
+    log_files = true
+    log_end = true
+    source_zones {
+        source_zone {
+            id = data.fmc_security_zones.outside.id
+            type =  data.fmc_security_zones.outside.type
+        }
+    }
+    destination_zones {
+        destination_zone {
+            id = data.fmc_security_zones.inside.id
+            type =  data.fmc_security_zones.inside.type
+        }
+    }
+    source_networks {
+        source_network {
+            id = fmc_network_objects.any_network.id
+            type =  fmc_network_objects.any_network.type
+        }
+    }
+    destination_networks {
+        destination_network {
+            id = fmc_network_objects.any_network.id
+            type =  fmc_network_objects.any_network.type
+        }
+    }
+    destination_ports {
+        destination_port {
+            id = fmc_port_objects.ssh.id
+            type =  fmc_port_objects.ssh.type
+        }
+    }
+    depends_on = [
+      fmc_port_objects.ssh,
+    ]
+```
+}
+
 ## Usage
 
 *To provision:*
