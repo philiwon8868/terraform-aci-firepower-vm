@@ -266,3 +266,4 @@ variable "**vm**" {
 
 1. [Cisco Infrastructure As Code](https://developer.cisco.com/iac/)
 2. [ACI provider Terraform](https://registry.terraform.io/providers/CiscoDevNet/aci/latest/docs)
+3. [FMC provider Terraform](https://registry.terraform.io/providers/CiscoDevNet/fmc/latest/docs)
