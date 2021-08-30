@@ -127,9 +127,44 @@ variable **"PBRs"** {
 ```
 }
 
+**Note how to extract the defined security zones, networks from FMC to be referenced by the sample access rules below**
+```
+# FMC Section
+
+data "fmc_access_policies" "acp" {
+    name = "Access-Control-Policy"
+}
+
+data "fmc_security_zones" "inside" {
+    name = "Inside"
+}
+
+data "fmc_security_zones" "outside" {
+    name = "Outside"
+}
+
+data "fmc_file_policies" "file_policy" {
+    name = "File_Policies"
+}
+
+resource "fmc_network_objects" "any_network" {
+  name        = "Any_network"
+  value       = "0.0.0.0/0"
+}
+
+data "fmc_devices" "device" {
+    name = "FTD232"
+}
+
+resource "fmc_port_objects" "ssh" {
+    name = "SSH_Access"
+    port = "22"
+    protocol = "TCP"
+}
+```
+
 **Sample FMC Acess rules**
 resource "**fmc_access_rules**" "access_rule1" {
-
 ```
     acp = data.fmc_access_policies.acp.id
     section = "mandatory"
@@ -175,6 +210,45 @@ resource "**fmc_access_rules**" "access_rule1" {
     depends_on = [
       fmc_port_objects.ssh,
     ]
+```
+}
+
+**Provisioning VMs for each of the 3 EPGs**
+variable "**vm**" {
+```
+    type = map
+    default = {
+      web = {
+        name = "web"
+        cpu = 2
+        memory = 4096
+        ip = "10.4.1.188"
+        netmask = "24"
+        gateway = "10.4.1.254"
+        domain = "mydomain.com"
+        folder = "Terraform VMs"
+      },
+      app = {
+        name = "app"
+        cpu = 4
+        memory = 4096
+        ip = "10.5.1.188"
+        netmask = "24"
+        gateway = "10.5.1.254"
+        domain = "mydomain.com"
+        folder = "Terraform VMs"
+      },
+      db = {
+        name = "db"
+        cpu = 8
+        memory = 4096
+        ip = "10.6.1.188"
+        netmask = "24"
+        gateway = "10.6.1.254"
+        domain = "mydomain.com"
+        folder = "Terraform VMs"
+      }
+    }
 ```
 }
 

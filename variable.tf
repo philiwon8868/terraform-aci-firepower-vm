@@ -214,24 +214,6 @@ variable "PBRs" {
     }
 }
 
-# Access Rules to be pushed to FMC
-variable "accsss_rules" {
-    type = map
-    default = {
-      access_rule1 = {
-         name = "SSH-Outside-In"
-         action = "allow"
-         enabled = true
-         enable_syslog = true
-         syslog_severity = "alert"
-         send_events_to_fmc = true
-         log_files = true
-         log_end = true
-         source_zone = "outside"
-      }
-    }
-}
-
 variable "vm" {
     type = map
     default = {

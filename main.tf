@@ -579,16 +579,16 @@ data "fmc_devices" "device" {
     name = "FTD232"
 }
 
-resource "fmc_ftd_deploy" "ftd" {
-    device = data.fmc_devices.device.id
-    ignore_warning = true
-    force_deploy = true
-}
-
 resource "fmc_port_objects" "ssh" {
     name = "SSH_Access"
     port = "22"
     protocol = "TCP"
+}
+
+resource "fmc_ftd_deploy" "ftd" {
+    device = data.fmc_devices.device.id
+    ignore_warning = true
+    force_deploy = true
 }
 
 resource "fmc_access_rules" "access_rule1" {
