@@ -127,7 +127,7 @@ variable **"PBRs"** {
 ```
 }
 
-**Note how to extract the defined security zones, networks from FMC to be referenced by the sample access rules below**
+**Referring to such FMC definitions as FTD device, security zones and networks to define access rules...**
 ```
 # FMC Section
 
@@ -163,7 +163,7 @@ resource "fmc_port_objects" "ssh" {
 }
 ```
 
-**Sample FMC Acess rules**
+**Defining sample FMC Acess rules**
 resource "**fmc_access_rules**" "access_rule1" {
 ```
     acp = data.fmc_access_policies.acp.id
