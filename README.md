@@ -164,6 +164,7 @@ resource "fmc_port_objects" "ssh" {
 ```
 
 **Defining sample FMC Acess rules**
+
 resource "**fmc_access_rules**" "access_rule1" {
 ```
     acp = data.fmc_access_policies.acp.id
@@ -214,6 +215,7 @@ resource "**fmc_access_rules**" "access_rule1" {
 }
 
 **Provisioning VMs for each of the 3 EPGs**
+
 variable "**vm**" {
 ```
     type = map
