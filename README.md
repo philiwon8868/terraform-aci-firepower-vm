@@ -56,7 +56,7 @@ This sample is developed and tested with Cisco ACI 5.2(1g) and [Terraform Cloud]
 ## Configuration
 
 Basically all variables are defined in the file "variable.tf" except for APIC login credential, APIC IP address, the FMC host and user name, the VMM domain name and the target ACI Tenant, which are defined in "Variables" section of the Terraform Cloud environment.
-![image](https://user-images.githubusercontent.com/8743281/123569650-505c8000-d7f9-11eb-95e0-52588e2f06ae.png)
+![image](https://user-images.githubusercontent.com/8743281/131301973-1c99c8a8-678b-4286-8d3b-28cbb58aca22.png)
 
 Modify **variable.tf** to include the parameters for APIC login credentials, the target ACI tenant name, the FMC host and the VMM domain name.
 
