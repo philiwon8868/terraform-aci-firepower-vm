@@ -48,7 +48,7 @@ This sample is developed and tested with Cisco ACI 5.2(1g) and [Terraform Cloud]
 
 3-Tier application composing of Web, App and Database Tiers with 2-armed mode Service Graph between Web-Tier and App-Tier is a very typical application profile. This sample serves as a quick reference to create all the necessary components on APIC with Terraform HCL. More complicated applicatioon profiles can be derived from this sample.
 
-## Installation
+## Installation 
 
 1. Install and setup your Terraform environment
 2. Simply copy the 2 files (**main.tf** and **variable.tf**) onto your Terraform runtime environment
