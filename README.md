@@ -13,7 +13,7 @@ Terraform HCL is a declarative language which will provision the followings onto
 * 2 Contracts: 
   * Between "App" and "DB": TCP Port 80 (HTTP) and ICMP
   * Between "Web" and "App": permit ALL with a Service Graph
-* Service Graph:
+* Service Graph: 
   * 2-Arm Routed Mode Unmanaged Firewall with Policy Based Redirect (PBR).
 ![image](https://user-images.githubusercontent.com/8743281/131295043-5ce7fd77-a04d-46e4-96b2-c59d84c85a7b.png)
 * FMC access rules
