@@ -30,7 +30,7 @@ Terraform HCL is a declarative language which will provision the followings onto
 The repository is originally developed to be triggered by a [Terraform Cloud](https://www.terraform.io/cloud) account to execute planning, cost estimation and then deployment. Therefore, the login credentials to APIC controller as well as such parameters as the target ACI tenant name are defined in "Variables" section of the Terraform Cloud environment. If the code is to be tested in a private Terraform environment, one may have to manually include these parameters in the variable file.
 
 ## Requirements
-Name | Version
+Name | Version 
 ---- | -------
 [terraform](https://www.terraform.io/downloads.html)| >= 0.13
 
