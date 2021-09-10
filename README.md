@@ -1,19 +1,19 @@
 # terraform-aci-firepower-vm
- 
+
 Sample [Terraform Cloud](https://www.terraform.io/cloud) Integration with [Cisco ACI Network](https://www.cisco.com/go/aci).
 
 This project is derived from a previous project: https://github.com/philiwon8868/terraform-aci. It is a working sample for those who would like to leverage on ACI's Terraform integration to experience the power of "Infrastructure As Code".
 
 The sample ACI application environment is a typical 3-Tier "web-app-db", leveraging ACI contracts and L4-L7 service graph with a Cisco Firepower Threat Defense (FTD) Virtual Device to govern their communication policies. The FTD devie will be managed by Cisco Firepower Management Center (FMC). FMC has Terraform provider support which allows us to push policies to FMC console, at which security operator can deploy to the target FTD devices.
-
+ 
 ![image](https://user-images.githubusercontent.com/8743281/131292771-7ddd9e23-bbf6-4f70-aad4-ecfb7d1e7063.png)
 
-Terraform HCL is a declarative language which will provision the followings onto an ACI private cloud environment: 
+Terraform HCL is a declarative language which will provision the followings onto an ACI private cloud environment:
 * 3 End-Point Groups (EPGs): "Web", "App" and "DB"
-* 2 Contracts: 
+* 2 Contracts:
   * Between "App" and "DB": TCP Port 80 (HTTP) and ICMP
   * Between "Web" and "App": permit ALL with a Service Graph
-* Service Graph: 
+* Service Graph:
   * 2-Arm Routed Mode Unmanaged Firewall with Policy Based Redirect (PBR).
 ![image](https://user-images.githubusercontent.com/8743281/131295043-5ce7fd77-a04d-46e4-96b2-c59d84c85a7b.png)
 * FMC access rules
@@ -30,7 +30,7 @@ Terraform HCL is a declarative language which will provision the followings onto
 The repository is originally developed to be triggered by a [Terraform Cloud](https://www.terraform.io/cloud) account to execute planning, cost estimation and then deployment. Therefore, the login credentials to APIC controller as well as such parameters as the target ACI tenant name are defined in "Variables" section of the Terraform Cloud environment. If the code is to be tested in a private Terraform environment, one may have to manually include these parameters in the variable file.
 
 ## Requirements
-Name | Version 
+Name | Version
 ---- | -------
 [terraform](https://www.terraform.io/downloads.html)| >= 0.13
 
@@ -48,7 +48,7 @@ This sample is developed and tested with Cisco ACI 5.2(1g) and [Terraform Cloud]
 
 3-Tier application composing of Web, App and Database Tiers with 2-armed mode Service Graph between Web-Tier and App-Tier is a very typical application profile. This sample serves as a quick reference to create all the necessary components on APIC with Terraform HCL. More complicated applicatioon profiles can be derived from this sample.
 
-## Installation 
+## Installation
 
 1. Install and setup your Terraform environment
 2. Simply copy the 2 files (**main.tf** and **variable.tf**) onto your Terraform runtime environment
